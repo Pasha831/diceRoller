@@ -2,7 +2,7 @@ package com.example.diceroller
 
 import android.os.Bundle
 import android.widget.Button
-import android.widget.TextView
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 
 /**
@@ -16,20 +16,34 @@ class MainActivity : AppCompatActivity() {
 
         val rollButton: Button = findViewById(R.id.button)
         rollButton.setOnClickListener { rollDice() }
+
+        // Do a roll dice when the app starts
+        rollDice()
     }
 
     private fun rollDice() {
-        // Create new Dice1 and Dice 2 objects with 6 sides and roll them
-        val dice1 = Dice(6)
-        val dice2 = Dice(6)
+        // Create a dice and roll it
+        val dice = Dice(6)
+        val diceRoll = dice.roll()
 
-        // Update the screen with the roll of the first dice
-        val resultTextView1: TextView = findViewById(R.id.dice1)
-        resultTextView1.text = dice1.roll().toString()
+        // Find an ImageView in the layout
+        val diceImage: ImageView = findViewById(R.id.diceImage)
 
-        // Update the screen with the roll of the second dice
-        val resultTextView2: TextView = findViewById(R.id.dice2)
-        resultTextView2.text = dice2.roll().toString()
+        // Determine which drawable resource ID to use based on the dice roll
+        val drawableResource = when (diceRoll) {
+            1 -> R.drawable.dice_1
+            2 -> R.drawable.dice_2
+            3 -> R.drawable.dice_3
+            4 -> R.drawable.dice_4
+            5 -> R.drawable.dice_5
+            else -> R.drawable.dice_6
+        }
+
+        // Update the ImageView with the correct drawable resource
+        diceImage.setImageResource(drawableResource)
+
+        // Description for screen readers for disabled people who have problems with eyesight
+        diceImage.contentDescription = diceRoll.toString()
     }
 }
 
