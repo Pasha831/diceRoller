@@ -1,5 +1,6 @@
 package com.example.diceroller
 
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
@@ -15,7 +16,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val rollButton: Button = findViewById(R.id.button)
-        rollButton.setOnClickListener { rollDice() }
+        rollButton.setOnClickListener {
+            val mp = MediaPlayer.create(this, R.raw.click_sound)
+            mp.start()
+            rollDice()
+        }
 
         // Do a roll dice when the app starts
         rollDice()
